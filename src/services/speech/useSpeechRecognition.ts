@@ -43,8 +43,8 @@ export interface UseSpeechRecognitionResult {
   reset: () => void;
 }
 
-// Language parameter is optional now—en-IN serves as the universal auto-engine
-export function useSpeechRecognition(): UseSpeechRecognitionResult {
+// Make parameter optional (_language?: any) so it works everywhere
+export function useSpeechRecognition(_language?: any): UseSpeechRecognitionResult {
   const Ctor = getSpeechRecognitionCtor();
   const isSupported = Boolean(Ctor);
 
@@ -71,7 +71,7 @@ export function useSpeechRecognition(): UseSpeechRecognitionResult {
 
     const recognition = new Ctor();
     
-    // Key Fix: 'en-IN' processes English, Hinglish, and spoken Hindi in standard script
+    // Key Fix: 'en-IN' processes English, Hinglish, and spoken Hindi automatically
     recognition.lang = 'en-IN'; 
     recognition.interimResults = true;
     recognition.continuous = true;
