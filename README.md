@@ -406,7 +406,6 @@ Both platforms serve over HTTPS by default, so browser speech recognition works 
 
 Sahayak solves the friction of typing out grocery lists by letting people just talk to their list. A large mic button drives the core loop: speak → transcribe → parse → act → confirm, visually and by voice. Speech-to-text and text-to-speech use the browser's native Web Speech API — no backend or API key needed — with an always-available text input as a fallback for unsupported browsers and accessibility. A rule-based NLP layer classifies intent (add/remove/update/search/clear/view) and extracts product, quantity, unit, brand, and price entities across English, Hindi, and Hinglish, using layered keyword and vocabulary dictionaries so new languages can be added without touching the parsing logic. Product search supports natural filters like "organic apples under ₹300," rendered as faceted product cards with substitutes. A recommendation engine analyzes purchase history to suggest restocks, frequent buys, seasonal picks, and complementary pairings. Items are auto-categorized into ten grocery categories. The app is built with React, TypeScript, Vite, and Tailwind CSS, is mobile-first and fully keyboard/screen-reader accessible, and persists data to localStorage behind a swappable data layer — ready to connect to Firebase/Supabase and a real product API. It deploys as a static build to Vercel or Netlify.
 
-*(200 words)*
 
 ---
 
