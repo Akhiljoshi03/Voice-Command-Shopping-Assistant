@@ -287,7 +287,7 @@ npm install
 npm run dev
 ```
 
-The app will be available at **http://localhost:5173**.
+The app will be available at **http://localhost:5176**.
 
 > Voice input needs a Web Speech API–capable browser (Chrome, Edge, Safari) on a secure context (`localhost` or `https://`). Elsewhere, the app automatically falls back to the text-command input — no feature is voice-only.
 
