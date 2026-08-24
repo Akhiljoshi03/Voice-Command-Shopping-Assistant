@@ -12,7 +12,7 @@ import type { VoiceState } from '../types';
 
 export function SearchPage() {
   const [params, setParams] = useSearchParams();
-  const { settings, addHistoryEntry } = useShopping();
+  const { addHistoryEntry } = useShopping();
   const [filters, setFilters] = useState<SearchFilters>({
     query: params.get('q') ?? undefined,
     brand: params.get('brand') ?? undefined,
@@ -23,7 +23,9 @@ export function SearchPage() {
   const [queryInput, setQueryInput] = useState(filters.query ?? '');
   const [isLoading, setIsLoading] = useState(false);
   const [voiceState, setVoiceState] = useState<VoiceState>('idle');
-  const recognition = useSpeechRecognition(settings.language);
+
+  // FIX: Called with 0 arguments to match updated hook
+  const recognition = useSpeechRecognition();
 
   useEffect(() => {
     setIsLoading(true);
