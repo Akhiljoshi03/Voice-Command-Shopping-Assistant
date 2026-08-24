@@ -1,14 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { LanguageCode } from '../../types';
 
-const SPEECH_LANG_MAP: Record<LanguageCode, string> = {
-  'en-IN': 'en-IN',
-  'hi-IN': 'hi-IN',
-  // Hinglish is spoken casually — Hindi recognition with Latin-script fallback works best in practice.
-  'hi-en': 'hi-IN',
-};
-
-// Minimal ambient typings so this compiles without the (non-standard) DOM lib types.
+// Minimal ambient typings for browser Speech Recognition
 interface SpeechRecognitionResultLike {
   isFinal: boolean;
   0: { transcript: string; confidence: number };
@@ -51,7 +43,8 @@ export interface UseSpeechRecognitionResult {
   reset: () => void;
 }
 
-export function useSpeechRecognition(language: LanguageCode): UseSpeechRecognitionResult {
+// Language parameter is optional now—en-IN serves as the universal auto-engine
+export function useSpeechRecognition(): UseSpeechRecognitionResult {
   const Ctor = getSpeechRecognitionCtor();
   const isSupported = Boolean(Ctor);
 
@@ -77,9 +70,11 @@ export function useSpeechRecognition(language: LanguageCode): UseSpeechRecogniti
     setInterimTranscript('');
 
     const recognition = new Ctor();
-    recognition.lang = SPEECH_LANG_MAP[language] ?? 'en-IN';
+    
+    // Key Fix: 'en-IN' processes English, Hinglish, and spoken Hindi in standard script
+    recognition.lang = 'en-IN'; 
     recognition.interimResults = true;
-    recognition.continuous = false;
+    recognition.continuous = true;
     recognition.maxAlternatives = 1;
 
     recognition.onstart = () => setIsListening(true);
@@ -112,7 +107,7 @@ export function useSpeechRecognition(language: LanguageCode): UseSpeechRecogniti
     } catch {
       setError('start-failed');
     }
-  }, [Ctor, language]);
+  }, [Ctor]);
 
   const stop = useCallback(() => {
     recognitionRef.current?.stop();
